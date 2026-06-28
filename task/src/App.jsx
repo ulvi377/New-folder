@@ -1,35 +1,28 @@
+
+
 import { useState } from "react";
-
-
-import Navbar from "./components/Navbar";
-import MovieCard from "./components/MovieCard";
-import MovieDetail from "./components/MovieDetail";
-import CinemaInfo from "./components/CinemaInfo";
-import Feedback from "./components/Feedback";
-import ButtonGroup from "./components/ButtonGroup";
-
-import movies from "./movies";
+import "./App.css";
+import StudentForm from "./components/StudentForm";
+import StudentList from "./components/StudentList";
 
 function App() {
-  const [search, setSearch] = useState("");
-  const [selectedMovie, setSelectedMovie] = useState(movies[0]);
+  const [students, setStudents] = useState([]);
 
-  const filteredMovies = movies.filter((movie) =>
-    movie.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const registerStudent = (student) => {
+    setStudents([...students, student]);
+  };
 
   return (
-    <><div className="movie-list">
-      {filteredMovies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          onClick={() => setSelectedMovie(movie)} />
-      ))}
-    </div><ButtonGroup movie={selectedMovie} /><div className="content">
-        <MovieDetail movie={selectedMovie} />
-        <CinemaInfo cinema={selectedMovie.cinema} />
-      </div></>
+    <div className="container">
+      <div className="left">
+        <StudentForm registerStudent={registerStudent} />
+      </div>
+
+      <div className="right">
+        <h2>Qeydiyyatdan keçən tələbələr</h2>
+        <StudentList students={students} />
+      </div>
+    </div>
   );
 }
 
